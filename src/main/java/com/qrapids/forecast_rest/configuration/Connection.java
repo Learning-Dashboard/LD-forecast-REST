@@ -5,7 +5,7 @@ import org.rosuda.REngine.REngineException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import Forecast.Elastic_RForecast;
+import Forecast.MongoDB_RForecast;
 
 @Configuration
 @PropertySource(value="classpath:application.properties", encoding="UTF-8")
@@ -13,11 +13,11 @@ public class Connection {
 
     private boolean init;
 
-    private Elastic_RForecast eForecast;
+    private MongoDB_RForecast eForecast;
 
     private String host;
     private String port;
-    private String path;
+    private String database;
     private String user;
     private String pwd;
 
@@ -38,8 +38,8 @@ public class Connection {
         return port;
     }
 
-    public String getPath() {
-        return path;
+    public String getDatabase() {
+        return database;
     }
 
     public String getUser() {
@@ -66,15 +66,15 @@ public class Connection {
         this.init = false;
     }
 
-    public Elastic_RForecast getConnection(String host, String port, String path, String user, String pwd) {
-        if (!init || !host.equals(this.host) || !port.equals(this.port) || !path.equals(this.path) || !user.equals(this.user) || !pwd.equals(this.pwd)) {
+    public MongoDB_RForecast getConnection(String host, String port, String database, String user, String pwd) {
+        if (!init || !host.equals(this.host) || !port.equals(this.port) || !database.equals(this.database) || !user.equals(this.user) || !pwd.equals(this.pwd)) {
             try {
                 this.host = host;
                 this.port = port;
-                this.path = path;
+                this.database = database;
                 this.user = user;
                 this.pwd = pwd;
-                eForecast = new Elastic_RForecast(host, Integer.parseInt(port), path, user, pwd, Rhost, Integer.parseInt(Rport), RLocation);
+                eForecast = new MongoDB_RForecast(host, Integer.parseInt(port), database, user, pwd, Rhost, Integer.parseInt(Rport), RLocation);
                 this.init = true;
                 return eForecast;
             } catch (REXPMismatchException|REngineException e) {

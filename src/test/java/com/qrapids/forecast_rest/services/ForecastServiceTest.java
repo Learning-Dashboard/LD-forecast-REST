@@ -1,7 +1,7 @@
 package com.qrapids.forecast_rest.services;
 
 import Forecast.Common;
-import Forecast.Elastic_RForecast;
+import Forecast.MongoDB_RForecast;
 import Forecast.ForecastDTO;
 import com.qrapids.forecast_rest.configuration.Connection;
 import org.junit.Before;
@@ -60,19 +60,19 @@ public class ForecastServiceTest {
     public void getForecastTechniques() throws Exception {
         String host = "host";
         String port = "8080";
-        String path = "path";
+        String database = "database";
         String user = "user";
         String pwd = "pwd";
 
-        Elastic_RForecast elastic_rForecast = mock(Elastic_RForecast.class);
-        when(connection.getConnection(host,port,path,user,pwd)).thenReturn(elastic_rForecast);
-        when(elastic_rForecast.getForecastTechniques()).thenReturn(Common.ForecastTechnique.values());
+        MongoDB_RForecast mongo_rForecast = mock(MongoDB_RForecast.class);
+        when(connection.getConnection(host, port, database, user, pwd)).thenReturn(mongo_rForecast);
+        when(mongo_rForecast.getForecastTechniques()).thenReturn(Common.ForecastTechnique.values());
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .get("/api/ForecastTechniques")
                 .param("host", host)
                 .param("port", port)
-                .param("path", path)
+                .param("database", database)
                 .param("user", user)
                 .param("pwd", pwd);
 
@@ -96,9 +96,9 @@ public class ForecastServiceTest {
                                 fieldWithPath("[]")
                                         .description("Forecast techiques"))));
 
-        verify(elastic_rForecast, times(1)).getForecastTechniques();
-        verifyNoMoreInteractions(elastic_rForecast);
-        verify(connection, times(1)).getConnection(host,port,path,user,pwd);
+        verify(mongo_rForecast, times(1)).getForecastTechniques();
+        verifyNoMoreInteractions(mongo_rForecast);
+        verify(connection, times(1)).getConnection(host, port, database, user, pwd);
         verifyNoMoreInteractions(connection);
     }
 
@@ -106,7 +106,7 @@ public class ForecastServiceTest {
     public void train() throws Exception {
         String host = "host";
         String port = "8080";
-        String path = "path";
+        String database = "database";
         String user = "user";
         String pwd = "pwd";
         String index = "indexMetrics";
@@ -114,14 +114,14 @@ public class ForecastServiceTest {
         String frequency = "7";
         String technique = "ETS";
 
-        Elastic_RForecast elastic_rForecast = mock(Elastic_RForecast.class);
-        when(connection.getConnection(host,port,path,user,pwd)).thenReturn(elastic_rForecast);
+        MongoDB_RForecast mongo_rForecast = mock(MongoDB_RForecast.class);
+        when(connection.getConnection(host, port, database, user, pwd)).thenReturn(mongo_rForecast);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .get("/api/Train")
                 .param("host", host)
                 .param("port", port)
-                .param("path", path)
+                .param("database", database)
                 .param("user", user)
                 .param("pwd", pwd)
                 .param("index", index)
@@ -136,17 +136,17 @@ public class ForecastServiceTest {
                         preprocessResponse(prettyPrint()),
                         requestParameters(
                                 parameterWithName("host")
-                                        .description("ElasticSearch host"),
+                                        .description("MongoDB host"),
                                 parameterWithName("port")
-                                        .description("ElasticSearch port"),
-                                parameterWithName("path")
-                                        .description("ElasticSearch path"),
+                                        .description("MongoDB port"),
+                                parameterWithName("database")
+                                        .description("MongoDB database name"),
                                 parameterWithName("user")
-                                        .description("ElasticSearch user"),
+                                        .description("MongoDB user"),
                                 parameterWithName("pwd")
-                                        .description("ElasticSearch password"),
+                                        .description("MongoDB password"),
                                 parameterWithName("index")
-                                        .description("ElasticSearch name of metrics or factors index"),
+                                        .description("MongoDB name of metrics or factors index"),
                                 parameterWithName("elements")
                                         .description("List of elements to forecast"),
                                 parameterWithName("frequency")
@@ -155,9 +155,9 @@ public class ForecastServiceTest {
                                         .description("Technique to train. If not present, all techniques are trained.")
                         )));
 
-        verify(elastic_rForecast, times(1)).multipleElementTrain(eq(elements),eq(index),eq(frequency), eq(Common.ForecastTechnique.ETS));
-        verifyNoMoreInteractions(elastic_rForecast);
-        verify(connection, times(1)).getConnection(host,port,path,user,pwd);
+        verify(mongo_rForecast, times(1)).multipleElementTrain(eq(elements), eq(index), eq(frequency), eq(Common.ForecastTechnique.ETS));
+        verifyNoMoreInteractions(mongo_rForecast);
+        verify(connection, times(1)).getConnection(host, port, database, user, pwd);
         verifyNoMoreInteractions(connection);
     }
 
@@ -165,7 +165,7 @@ public class ForecastServiceTest {
     public void getForecastMetric() throws Exception {
         String host = "host";
         String port = "8080";
-        String path = "path";
+        String database = "database";
         String user = "user";
         String pwd = "pwd";
         String indexMetrics = "indexMetrics";
@@ -189,15 +189,15 @@ public class ForecastServiceTest {
         ArrayList<ForecastDTO> forecastDTOArrayList = new ArrayList<>();
         forecastDTOArrayList.add(forecastDTO);
 
-        Elastic_RForecast elastic_rForecast = mock(Elastic_RForecast.class);
-        when(connection.getConnection(host,port,path,user,pwd)).thenReturn(elastic_rForecast);
-        when(elastic_rForecast.multipleElementForecast(metric,indexMetrics,frequency,horizon, Common.ForecastTechnique.ETS)).thenReturn(forecastDTOArrayList);
+        MongoDB_RForecast mongo_rForecast = mock(MongoDB_RForecast.class);
+        when(connection.getConnection(host, port, database, user, pwd)).thenReturn(mongo_rForecast);
+        when(mongo_rForecast.multipleElementForecast(metric, indexMetrics, frequency, horizon, Common.ForecastTechnique.ETS)).thenReturn(forecastDTOArrayList);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .get("/api/Metrics/Forecast")
                 .param("host", host)
                 .param("port", port)
-                .param("path", path)
+                .param("database", database)
                 .param("user", user)
                 .param("pwd", pwd)
                 .param("index_metrics", indexMetrics)
@@ -224,17 +224,17 @@ public class ForecastServiceTest {
                         preprocessResponse(prettyPrint()),
                         requestParameters(
                                 parameterWithName("host")
-                                        .description("ElasticSearch host"),
+                                        .description("MongoDB host"),
                                 parameterWithName("port")
-                                        .description("ElasticSearch port"),
-                                parameterWithName("path")
-                                        .description("ElasticSearch path"),
+                                        .description("MongoDB port"),
+                                parameterWithName("database")
+                                        .description("MongoDB database name"),
                                 parameterWithName("user")
-                                        .description("ElasticSearch user"),
+                                        .description("MongoDB user"),
                                 parameterWithName("pwd")
-                                        .description("ElasticSearch password"),
+                                        .description("MongoDB password"),
                                 parameterWithName("index_metrics")
-                                        .description("ElasticSearch name of metrics index"),
+                                        .description("MongoDB name of metrics index"),
                                 parameterWithName("metric")
                                         .description("List of metrics to forecast"),
                                 parameterWithName("frequency")
@@ -261,9 +261,9 @@ public class ForecastServiceTest {
                                         .description("Description of the forecasting error")
                         )));
 
-        verify(elastic_rForecast, times(1)).multipleElementForecast(metric,indexMetrics,frequency,horizon, Common.ForecastTechnique.ETS);
-        verifyNoMoreInteractions(elastic_rForecast);
-        verify(connection, times(1)).getConnection(host,port,path,user,pwd);
+        verify(mongo_rForecast, times(1)).multipleElementForecast(metric, indexMetrics, frequency, horizon, Common.ForecastTechnique.ETS);
+        verifyNoMoreInteractions(mongo_rForecast);
+        verify(connection, times(1)).getConnection(host, port, database, user, pwd);
         verifyNoMoreInteractions(connection);
     }
 
@@ -271,7 +271,7 @@ public class ForecastServiceTest {
     public void getForecastMetricWrongTechnique () throws Exception {
         String host = "host";
         String port = "8080";
-        String path = "path";
+        String database = "database";
         String user = "user";
         String pwd = "pwd";
         String indexMetrics = "indexMetrics";
@@ -284,7 +284,7 @@ public class ForecastServiceTest {
                 .get("/api/Metrics/Forecast")
                 .param("host", host)
                 .param("port", port)
-                .param("path", path)
+                .param("database", database)
                 .param("user", user)
                 .param("pwd", pwd)
                 .param("index_metrics", indexMetrics)
@@ -302,7 +302,7 @@ public class ForecastServiceTest {
     public void getForecastFactor() throws Exception {
         String host = "host";
         String port = "8080";
-        String path = "path";
+        String database = "database";
         String user = "user";
         String pwd = "pwd";
         String indexFactors = "indexFactors";
@@ -326,15 +326,15 @@ public class ForecastServiceTest {
         ArrayList<ForecastDTO> forecastDTOArrayList = new ArrayList<>();
         forecastDTOArrayList.add(forecastDTO);
 
-        Elastic_RForecast elastic_rForecast = mock(Elastic_RForecast.class);
-        when(connection.getConnection(host,port,path,user,pwd)).thenReturn(elastic_rForecast);
-        when(elastic_rForecast.multipleElementForecast(factor,indexFactors,frequency,horizon, Common.ForecastTechnique.ETS)).thenReturn(forecastDTOArrayList);
+        MongoDB_RForecast mongo_rForecast = mock(MongoDB_RForecast.class);
+        when(connection.getConnection(host, port, database, user, pwd)).thenReturn(mongo_rForecast);
+        when(mongo_rForecast.multipleElementForecast(factor, indexFactors, frequency, horizon, Common.ForecastTechnique.ETS)).thenReturn(forecastDTOArrayList);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .get("/api/QualityFactors/Forecast")
                 .param("host", host)
                 .param("port", port)
-                .param("path", path)
+                .param("database", database)
                 .param("user", user)
                 .param("pwd", pwd)
                 .param("index_factors", indexFactors)
@@ -361,17 +361,17 @@ public class ForecastServiceTest {
                         preprocessResponse(prettyPrint()),
                         requestParameters(
                                 parameterWithName("host")
-                                        .description("ElasticSearch host"),
+                                        .description("MongoDB host"),
                                 parameterWithName("port")
-                                        .description("ElasticSearch port"),
-                                parameterWithName("path")
-                                        .description("ElasticSearch path"),
+                                        .description("MongoDB port"),
+                                parameterWithName("database")
+                                        .description("MongoDB database name"),
                                 parameterWithName("user")
-                                        .description("ElasticSearch user"),
+                                        .description("MongoDB user"),
                                 parameterWithName("pwd")
-                                        .description("ElasticSearch password"),
+                                        .description("MongoDB password"),
                                 parameterWithName("index_factors")
-                                        .description("ElasticSearch name of factors index"),
+                                        .description("MongoDB name of factors index"),
                                 parameterWithName("factor")
                                         .description("List of factors to forecast"),
                                 parameterWithName("frequency")
@@ -398,9 +398,9 @@ public class ForecastServiceTest {
                                         .description("Description of the forecasting error")
                         )));
 
-        verify(elastic_rForecast, times(1)).multipleElementForecast(factor,indexFactors,frequency,horizon, Common.ForecastTechnique.ETS);
-        verifyNoMoreInteractions(elastic_rForecast);
-        verify(connection, times(1)).getConnection(host,port,path,user,pwd);
+        verify(mongo_rForecast, times(1)).multipleElementForecast(factor, indexFactors, frequency, horizon, Common.ForecastTechnique.ETS);
+        verifyNoMoreInteractions(mongo_rForecast);
+        verify(connection, times(1)).getConnection(host, port, database, user, pwd);
         verifyNoMoreInteractions(connection);
     }
 
@@ -408,7 +408,7 @@ public class ForecastServiceTest {
     public void getForecastFactorWrongTechnique () throws Exception {
         String host = "host";
         String port = "8080";
-        String path = "path";
+        String database = "database";
         String user = "user";
         String pwd = "pwd";
         String indexFactors = "indexFactors";
@@ -421,7 +421,7 @@ public class ForecastServiceTest {
                 .get("/api/QualityFactors/Forecast")
                 .param("host", host)
                 .param("port", port)
-                .param("path", path)
+                .param("database", database)
                 .param("user", user)
                 .param("pwd", pwd)
                 .param("index_factors", indexFactors)
@@ -439,7 +439,7 @@ public class ForecastServiceTest {
     public void getForecastStrategicIndicator() throws Exception {
         String host = "host";
         String port = "8080";
-        String path = "path";
+        String database = "database";
         String user = "user";
         String pwd = "pwd";
         String indexSIs = "indexSIs";
@@ -463,15 +463,15 @@ public class ForecastServiceTest {
         ArrayList<ForecastDTO> forecastDTOArrayList = new ArrayList<>();
         forecastDTOArrayList.add(forecastDTO);
 
-        Elastic_RForecast elastic_rForecast = mock(Elastic_RForecast.class);
-        when(connection.getConnection(host,port,path,user,pwd)).thenReturn(elastic_rForecast);
-        when(elastic_rForecast.multipleElementForecast(si,indexSIs,frequency,horizon, Common.ForecastTechnique.ETS)).thenReturn(forecastDTOArrayList);
+        MongoDB_RForecast mongo_rForecast = mock(MongoDB_RForecast.class);
+        when(connection.getConnection(host, port, database, user, pwd)).thenReturn(mongo_rForecast);
+        when(mongo_rForecast.multipleElementForecast(si, indexSIs, frequency, horizon, Common.ForecastTechnique.ETS)).thenReturn(forecastDTOArrayList);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .get("/api/StrategicIndicators/Forecast")
                 .param("host", host)
                 .param("port", port)
-                .param("path", path)
+                .param("database", database)
                 .param("user", user)
                 .param("pwd", pwd)
                 .param("index_strategic_indicators", indexSIs)
@@ -498,17 +498,17 @@ public class ForecastServiceTest {
                         preprocessResponse(prettyPrint()),
                         requestParameters(
                                 parameterWithName("host")
-                                        .description("ElasticSearch host"),
+                                        .description("MongoDB host"),
                                 parameterWithName("port")
-                                        .description("ElasticSearch port"),
-                                parameterWithName("path")
-                                        .description("ElasticSearch path"),
+                                        .description("MongoDB port"),
+                                parameterWithName("database")
+                                        .description("MongoDB database name"),
                                 parameterWithName("user")
-                                        .description("ElasticSearch user"),
+                                        .description("MongoDB user"),
                                 parameterWithName("pwd")
-                                        .description("ElasticSearch password"),
+                                        .description("MongoDB password"),
                                 parameterWithName("index_strategic_indicators")
-                                        .description("ElasticSearch name of strategic indicators index"),
+                                        .description("MongoDB name of strategic indicators index"),
                                 parameterWithName("strategic_indicator")
                                         .description("List of strategic indicators to forecast"),
                                 parameterWithName("frequency")
@@ -535,9 +535,9 @@ public class ForecastServiceTest {
                                         .description("Description of the forecasting error")
                         )));
 
-        verify(elastic_rForecast, times(1)).multipleElementForecast(si,indexSIs,frequency,horizon, Common.ForecastTechnique.ETS);
-        verifyNoMoreInteractions(elastic_rForecast);
-        verify(connection, times(1)).getConnection(host,port,path,user,pwd);
+        verify(mongo_rForecast, times(1)).multipleElementForecast(si, indexSIs, frequency, horizon, Common.ForecastTechnique.ETS);
+        verifyNoMoreInteractions(mongo_rForecast);
+        verify(connection, times(1)).getConnection(host, port, database, user, pwd);
         verifyNoMoreInteractions(connection);
     }
 
@@ -545,7 +545,7 @@ public class ForecastServiceTest {
     public void getForecastStrategicIndicatorWrongTechnique () throws Exception {
         String host = "host";
         String port = "8080";
-        String path = "path";
+        String database = "database";
         String user = "user";
         String pwd = "pwd";
         String indexSIs = "indexSIs";
@@ -558,7 +558,7 @@ public class ForecastServiceTest {
                 .get("/api/StrategicIndicators/Forecast")
                 .param("host", host)
                 .param("port", port)
-                .param("path", path)
+                .param("database", database)
                 .param("user", user)
                 .param("pwd", pwd)
                 .param("index_strategic_indicators", indexSIs)
