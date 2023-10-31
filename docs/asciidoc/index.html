@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.8">
-<meta name="author" content="v0.4, 2020-04-17">
+<meta name="author" content="v0.5, 2023-10-30">
 <title>Forecast Api REST Documentation</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -435,7 +435,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="header">
 <h1>Forecast Api REST Documentation</h1>
 <div class="details">
-<span id="author" class="author">v0.4, 2020-04-17</span><br>
+<span id="author" class="author">v0.5, 2023-10-30</span><br>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -474,7 +474,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h4 id="_forecast_techniques_curl_request">Curl request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/api/ForecastTechniques?host=host&amp;port=8080&amp;path=path&amp;user=user&amp;pwd=pwd' -i -X GET</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/api/ForecastTechniques?host=host&amp;port=8080&amp;database=database&amp;user=user&amp;pwd=pwd' -i -X GET</code></pre>
 </div>
 </div>
 </div>
@@ -536,27 +536,27 @@ Content-Length: 114
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>host</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ElasticSearch host</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MongoDB host</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>port</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ElasticSearch port</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MongoDB port</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>path</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ElasticSearch path</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>database</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MongoDB database name</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>user</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ElasticSearch user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MongoDB user</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>pwd</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ElasticSearch password</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MongoDB password</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>index</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ElasticSearch name of metrics or factors index</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MongoDB name of metrics or factors index</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>elements</code></p></td>
@@ -577,7 +577,7 @@ Content-Length: 114
 <h4 id="_forecast_training_curl_request">Curl request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/api/Train?host=host&amp;port=8080&amp;path=path&amp;user=user&amp;pwd=pwd&amp;index=indexMetrics&amp;elements=testperformance&amp;frequency=7&amp;technique=ETS' -i -X GET</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/api/Train?host=host&amp;port=8080&amp;database=database&amp;user=user&amp;pwd=pwd&amp;index=indexMetrics&amp;elements=testperformance&amp;frequency=7&amp;technique=ETS' -i -X GET</code></pre>
 </div>
 </div>
 </div>
@@ -611,27 +611,27 @@ Content-Length: 114
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>host</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ElasticSearch host</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MongoDB host</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>port</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ElasticSearch port</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MongoDB port</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>path</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ElasticSearch path</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>database</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MongoDB database name</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>user</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ElasticSearch user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MongoDB user</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>pwd</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ElasticSearch password</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MongoDB password</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>index_metrics</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ElasticSearch name of metrics index</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MongoDB name of metrics index</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>metric</code></p></td>
@@ -656,7 +656,7 @@ Content-Length: 114
 <h4 id="_metrics_forecasting_curl_request">Curl request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/api/Metrics/Forecast?host=host&amp;port=8080&amp;path=path&amp;user=user&amp;pwd=pwd&amp;index_metrics=indexMetrics&amp;metric=testperformance&amp;frequency=7&amp;horizon=10&amp;technique=ETS' -i -X GET</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/api/Metrics/Forecast?host=host&amp;port=8080&amp;database=database&amp;user=user&amp;pwd=pwd&amp;index_metrics=indexMetrics&amp;metric=testperformance&amp;frequency=7&amp;horizon=10&amp;technique=ETS' -i -X GET</code></pre>
 </div>
 </div>
 </div>
@@ -756,27 +756,27 @@ Content-Length: 840
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>host</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ElasticSearch host</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MongoDB host</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>port</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ElasticSearch port</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MongoDB port</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>path</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ElasticSearch path</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>database</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MongoDB database name</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>user</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ElasticSearch user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MongoDB user</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>pwd</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ElasticSearch password</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MongoDB password</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>index_factors</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ElasticSearch name of factors index</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MongoDB name of factors index</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>factor</code></p></td>
@@ -801,7 +801,7 @@ Content-Length: 840
 <h4 id="_factors_forecasting_curl_request">Curl request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/api/QualityFactors/Forecast?host=host&amp;port=8080&amp;path=path&amp;user=user&amp;pwd=pwd&amp;index_factors=indexFactors&amp;factor=blockingcode&amp;frequency=7&amp;horizon=10&amp;technique=ETS' -i -X GET</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/api/QualityFactors/Forecast?host=host&amp;port=8080&amp;database=database&amp;user=user&amp;pwd=pwd&amp;index_factors=indexFactors&amp;factor=blockingcode&amp;frequency=7&amp;horizon=10&amp;technique=ETS' -i -X GET</code></pre>
 </div>
 </div>
 </div>
@@ -901,27 +901,27 @@ Content-Length: 837
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>host</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ElasticSearch host</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MongoDB host</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>port</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ElasticSearch port</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MongoDB port</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>path</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ElasticSearch path</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>database</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MongoDB database name</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>user</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ElasticSearch user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MongoDB user</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>pwd</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ElasticSearch password</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MongoDB password</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>index_strategic_indicators</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ElasticSearch name of strategic indicators index</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MongoDB name of strategic indicators index</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>strategic_indicator</code></p></td>
@@ -946,7 +946,7 @@ Content-Length: 837
 <h4 id="_strategic_indicators_forecasting_curl_request">Curl request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/api/StrategicIndicators/Forecast?host=host&amp;port=8080&amp;path=path&amp;user=user&amp;pwd=pwd&amp;index_strategic_indicators=indexSIs&amp;strategic_indicator=blocking&amp;frequency=7&amp;horizon=10&amp;technique=ETS' -i -X GET</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/api/StrategicIndicators/Forecast?host=host&amp;port=8080&amp;database=database&amp;user=user&amp;pwd=pwd&amp;index_strategic_indicators=indexSIs&amp;strategic_indicator=blocking&amp;frequency=7&amp;horizon=10&amp;technique=ETS' -i -X GET</code></pre>
 </div>
 </div>
 </div>
@@ -1030,7 +1030,7 @@ Content-Length: 833
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-04-17 12:02:58 +0200
+Last updated 2023-10-30 17:58:30 +0100
 </div>
 </div>
 </body>
