@@ -18,7 +18,7 @@ This is a Gradle project. You can use any IDE that supports Gradle to build it, 
 
 ```
 # Example: using Gradle wrapper to build with dependencies
-cd qrapids-forecast-rest
+cd LD-forecast-rest
 gradlew war
 ```
 After the build is done the WAR file can be found at the __build/libs__ directory
